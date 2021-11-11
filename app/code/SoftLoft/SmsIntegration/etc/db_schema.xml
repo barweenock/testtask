@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="softloft_smsintegration" resource="default" engine="innodb" comment="softloft_smsintegration Table">
+		<column xsi:type="smallint" name="entity_id" padding="6" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="entity_id"/>
+		</constraint>
+        <column name="event_type_code" nullable="true" xsi:type="text" comment="content"/>
+        <column name="data" nullable="true" xsi:type="text" comment="data"/>
+		<column name="customer_phone" nullable="true" xsi:type="varchar" comment="customer_phone" length="255"/>
+        <column name="count_attempts" nullable="true" xsi:type="smallint" comment="count_attempts"/>
+        <column name="status" nullable="true" xsi:type="varchar" comment="status" length="255"/>
+	</table>
+</schema>

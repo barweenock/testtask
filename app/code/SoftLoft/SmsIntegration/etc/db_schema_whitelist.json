@@ -1,0 +1,15 @@
+{
+    "softloft_smsintegration": {
+        "column": {
+            "entity_id": true,
+            "event_type_code": true,
+            "data": true,
+            "customer_phone": true,
+            "count_attempts": true,
+            "status": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

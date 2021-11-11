@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="SoftLoft\SmsIntegration\Api\NotificationRepositoryInterface" type="SoftLoft\SmsIntegration\Model\NotificationRepository"/>
+	<preference for="SoftLoft\SmsIntegration\Api\Data\NotificationInterface" type="SoftLoft\SmsIntegration\Model\Data\SmsIntegration"/>
+	<preference for="SoftLoft\SmsIntegration\Api\Data\NotificationSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="SoftLoft\SmsIntegration\Model\ResourceModel\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">softloft_smsintegration</argument>
+			<argument name="resourceModel" xsi:type="string">SoftLoft\SmsIntegration\Model\ResourceModel\SmsIntegration</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="softloft_smsintegration_listing_data_source" xsi:type="string">SoftLoft\SmsIntegration\Model\ResourceModel\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+</config>
