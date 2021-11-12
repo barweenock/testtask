@@ -15,5 +15,18 @@ class SmsTemplates extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     {
         $this->_init('softloft_smsintegration_smstemplates', 'smstemplates_id');
     }
+
+    public function getSmsTemplate($connection, $storeId, $entTypeCode)
+    {
+        $select = $connection->select()
+            ->from(
+                'softloft_smsintegration_smstemplates',
+                'message_template'
+            )
+            ->where('event_type_code = ?', $entTypeCode)
+            ->where('store_id = ?', $storeId);
+
+        return $connection->fetchOne($select);
+    }
 }
 

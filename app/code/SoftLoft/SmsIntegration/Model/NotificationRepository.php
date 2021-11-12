@@ -23,6 +23,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\ResourceConnection;
+use SoftLoft\SmsIntegration\Model\ResourceModel\SmsTemplates;
 
 class NotificationRepository implements NotificationRepositoryInterface
 {
@@ -80,7 +81,15 @@ class NotificationRepository implements NotificationRepositoryInterface
      * @var IntegrationCollectionFactory
      */
     private IntegrationCollectionFactory $integrationCollectionFactory;
+
+    /**
+     * @var ResourceConnection
+     */
     private ResourceConnection $resourceConnection;
+    /**
+     * @var SmsTemplates
+     */
+    private $smsTemplates;
 
     /**
      * @param ResourceIntegration $resource
@@ -94,6 +103,7 @@ class NotificationRepository implements NotificationRepositoryInterface
      * @param JoinProcessorInterface $extensionAttributesJoinProcessor
      * @param ExtensibleDataObjectConverter $extensibleDataObjectConverter
      * @param ResourceConnection $resourceConnection
+     * @param SmsTemplates $smsTemplates
      */
     public function __construct(
         ResourceIntegration $resource,
@@ -106,7 +116,8 @@ class NotificationRepository implements NotificationRepositoryInterface
         CollectionProcessorInterface $collectionProcessor,
         JoinProcessorInterface $extensionAttributesJoinProcessor,
         ExtensibleDataObjectConverter $extensibleDataObjectConverter,
-        ResourceConnection $resourceConnection
+        ResourceConnection $resourceConnection,
+        SmsTemplates $smsTemplates
     ) {
         $this->resource = $resource;
         $this->integrationFactory = $integrationFactory;
@@ -120,6 +131,7 @@ class NotificationRepository implements NotificationRepositoryInterface
         $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
         $this->extensibleDataObjectConverter = $extensibleDataObjectConverter;
         $this->resourceConnection = $resourceConnection;
+        $this->smsTemplates = $smsTemplates;
     }
 
     /**
@@ -157,15 +169,8 @@ class NotificationRepository implements NotificationRepositoryInterface
         }
 
         $connection = $this->resourceConnection->getConnection();
-        $select = $connection->select()
-            ->from(
-                'sms_templates',
-                      'message_template'
-            )
-            ->where('event_type_code = ?', $entTypeCode)
-            ->where('store_id = ?', $storeId);
-        $record = $connection->fetchOne($select);
 
+        $record = $this->smsTemplates->getSmsTemplate($connection, $storeId, $entTypeCode);
         if (!$record) {
             throw new NoSuchEntityException(__('message_template for entity_type_code "%1" does not exist.', $entTypeCode));
         }
@@ -181,12 +186,6 @@ class NotificationRepository implements NotificationRepositoryInterface
         SearchCriteriaInterface $searchCriteria
     ): SearchResultsInterface
     {
-        /**
-         * event_type_code=forgot_password store_id=1 message=You have been reseted your password on email: %customer_email%
-         *
-         *
-         */
-
         $collection = $this->integrationCollectionFactory->create();
         $this->extensionAttributesJoinProcessor->process(
             $collection,
