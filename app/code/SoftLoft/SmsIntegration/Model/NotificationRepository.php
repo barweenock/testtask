@@ -1,11 +1,6 @@
 <?php
 
 declare(strict_types=1);
-/**
- * @category    DBI
- * @package     DBI_BannerGraphQl
- * @author      Anton Stukalo <anton.s@bilberrry.com>
- */
 
 namespace SoftLoft\SmsIntegration\Model;
 
@@ -87,7 +82,7 @@ class NotificationRepository implements NotificationRepositoryInterface
     /**
      * @param ResourceIntegration $resource
      * @param IntegrationFactory $integrationFactory
-     * @param IntegrationInterfaceFactory $dataintegrationFactory
+     * @param IntegrationInterfaceFactory $dataIntegrationFactory
      * @param IntegrationCollectionFactory $integrationCollectionFactory
      * @param SearchResultsInterfaceFactory $searchResultsFactory
      * @param DataObjectHelper $dataObjectHelper
@@ -127,10 +122,10 @@ class NotificationRepository implements NotificationRepositoryInterface
      * {@inheritdoc}
      */
     public function save(
-        NotificationInterface $integration
+        NotificationInterface $notification
     ) {
         $integrationData = $this->extensibleDataObjectConverter->toNestedArray(
-            $integration,
+            $notification,
             [],
             NotificationInterface::class
         );
@@ -151,13 +146,13 @@ class NotificationRepository implements NotificationRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function get($integrationId): NotificationInterface
+    public function get($notificationId): NotificationInterface
     {
         $integration = $this->integrationFactory->create();
-        $this->resource->load($integration, $integrationId);
+        $this->resource->load($integration, $notificationId);
 
         if (!$integration->getId()) {
-            throw new NoSuchEntityException(__('integration with id "%1" does not exist.', $integrationId));
+            throw new NoSuchEntityException(__('integration with id "%1" does not exist.', $notificationId));
         }
 
         return $integration->getDataModel();
@@ -192,11 +187,11 @@ class NotificationRepository implements NotificationRepositoryInterface
      * {@inheritdoc}
      */
     public function delete(
-        NotificationInterface $integration
+        NotificationInterface $notification
     ): bool {
         try {
             $integrationModel = $this->integrationFactory->create();
-            $this->resource->load($integrationModel, $integration->getBannerId());
+            $this->resource->load($integrationModel, $notification->getBannerId());
             $this->resource->delete($integrationModel);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__(

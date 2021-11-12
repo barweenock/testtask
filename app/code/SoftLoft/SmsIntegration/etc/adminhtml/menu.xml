@@ -7,11 +7,29 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="SoftLoft_SmsIntegration::menu" title="SmsIntegration"
-             translate="title" module="SoftLoft_SmsIntegration"
-             sortOrder="900" resource="SoftLoft_SmsIntegration::menu"
+        <add id="SoftLoft_SmsIntegration::menu"
+             title="Sms Integration"
+             translate="title"
+             module="SoftLoft_SmsIntegration"
+             sortOrder="900"
+             resource="SoftLoft_SmsIntegration::menu"
              action="softloft_smsintegration/smsintegration/index"
         />
-
+        <add id="SoftLoft_SmsIntegration::softloft_smsintegration_smstemplates"
+             title="Sms Templates"
+             module="SoftLoft_SmsIntegration"
+             sortOrder="9999"
+             resource="SoftLoft_SmsIntegration::softloft_smsintegration_smstemplates"
+             parent="SoftLoft_SmsIntegration::menu"
+             action="softloft_smsintegration/smstemplates/index"/>
+        <add id="SoftLoft_SmsIntegration::softloft_smsintegration_smsintegration"
+             title="Sms Integration"
+             translate="title"
+             module="SoftLoft_SmsIntegration"
+             sortOrder="900"
+             parent="SoftLoft_SmsIntegration::menu"
+             resource="SoftLoft_SmsIntegration::softloft_smsintegration_smsintegration"
+             action="softloft_smsintegration/smsintegration/index"
+        />
     </menu>
 </config>

@@ -1,19 +1,51 @@
-<?xml version="1.0" ?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-	<preference for="SoftLoft\SmsIntegration\Api\NotificationRepositoryInterface" type="SoftLoft\SmsIntegration\Model\NotificationRepository"/>
-	<preference for="SoftLoft\SmsIntegration\Api\Data\NotificationInterface" type="SoftLoft\SmsIntegration\Model\Data\SmsIntegration"/>
-	<preference for="SoftLoft\SmsIntegration\Api\Data\NotificationSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
-	<virtualType name="SoftLoft\SmsIntegration\Model\ResourceModel\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
-		<arguments>
-			<argument name="mainTable" xsi:type="string">softloft_smsintegration</argument>
-			<argument name="resourceModel" xsi:type="string">SoftLoft\SmsIntegration\Model\ResourceModel\SmsIntegration</argument>
-		</arguments>
-	</virtualType>
-	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
-		<arguments>
-			<argument name="collections" xsi:type="array">
-				<item name="softloft_smsintegration_listing_data_source" xsi:type="string">SoftLoft\SmsIntegration\Model\ResourceModel\Grid\Collection</item>
-			</argument>
-		</arguments>
-	</type>
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="SoftLoft\SmsIntegration\Api\EventLoggerInterface" type="SoftLoft\SmsIntegration\Model\EventLogger"/>
+    <type name="Magento\Customer\Model\AccountManagement">
+        <plugin name="softloft_smsintegration_customer_registration" type="SoftLoft\SmsIntegration\Plugin\CustomerRegistration" sortOrder='1' disabled="false"/>
+        <plugin name="softloft_smsintegration_forgot_password" type="SoftLoft\SmsIntegration\Plugin\ForgotPassword" sortOrder='1' disabled="false"/>
+    </type>
+    <preference for="SoftLoft\SmsIntegration\Api\NotificationRepositoryInterface" type="SoftLoft\SmsIntegration\Model\NotificationRepository"/>
+    <preference for="SoftLoft\SmsIntegration\Api\Data\NotificationInterface" type="SoftLoft\SmsIntegration\Model\Data\SmsIntegration"/>
+    <virtualType name="SoftLoft\SmsIntegration\Model\ResourceModel\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">softloft_smsintegration</argument>
+            <argument name="resourceModel" xsi:type="string">SoftLoft\SmsIntegration\Model\ResourceModel\SmsIntegration</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="softloft_smsintegration_listing_data_source" xsi:type="string">SoftLoft\SmsIntegration\Model\ResourceModel\Grid\Collection</item>
+            </argument>
+        </arguments>
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="softloft_smsintegration_smstemplates_listing_data_source" xsi:type="string">SoftLoft\SmsIntegration\Model\ResourceModel\SmsTemplates\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="SoftLoft\SmsIntegration\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="SoftLoft\SmsIntegration\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">sms integration logger</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">SoftLoft\SmsIntegration\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="SoftLoft\SmsIntegration\Api\SmsTemplatesRepositoryInterface" type="SoftLoft\SmsIntegration\Model\SmsTemplatesRepository"/>
+    <preference for="SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface" type="SoftLoft\SmsIntegration\Model\Data\SmsTemplates"/>
+    <preference for="SoftLoft\SmsIntegration\Api\Data\SmsTemplatesSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <virtualType name="SoftLoft\SmsIntegration\Model\ResourceModel\SmsTemplates\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">softloft_smsintegration_smstemplates</argument>
+            <argument name="resourceModel" xsi:type="string">SoftLoft\SmsIntegration\Model\ResourceModel\SmsTemplates\Collection</argument>
+        </arguments>
+    </virtualType>
 </config>

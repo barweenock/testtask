@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Model\ResourceModel\SmsIntegration;
 
-class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
+use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+
+class Collection extends AbstractCollection
 {
 
     /**

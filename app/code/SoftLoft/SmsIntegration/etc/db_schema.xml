@@ -11,4 +11,13 @@
         <column name="count_attempts" nullable="true" xsi:type="smallint" comment="count_attempts"/>
         <column name="status" nullable="true" xsi:type="varchar" comment="status" length="255"/>
 	</table>
+	<table name="softloft_smsintegration_smstemplates" resource="default" engine="innodb" comment="softloft_smsintegration_smstemplates Table">
+		<column xsi:type="smallint" name="smstemplates_id" padding="6" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="smstemplates_id"/>
+		</constraint>
+		<column name="store_id" nullable="true" xsi:type="int" comment="Store Id" identity="false"/>
+		<column name="event_type_code" nullable="true" xsi:type="varchar" comment="Event Type Code" length="255"/>
+		<column name="message_template" nullable="true" xsi:type="varchar" comment="Message Template" length="255"/>
+	</table>
 </schema>

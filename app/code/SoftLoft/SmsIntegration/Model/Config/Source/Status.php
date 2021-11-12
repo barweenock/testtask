@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Model\Config\Source;
 
-class Status implements \Magento\Framework\Data\OptionSourceInterface
+use Magento\Framework\Data\OptionSourceInterface;
+
+class Status implements OptionSourceInterface
 {
     /**
      * @return array
