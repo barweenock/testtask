@@ -44,9 +44,7 @@ class SmsMessageProcessor implements SmsMessageProcessorInterface
     }
 
     /**
-     * @return array
-     * @throws NoSuchEntityException
-     * @throws LocalizedException
+     * @inheritdoc
      */
     public function process(): array
     {
@@ -80,7 +78,15 @@ class SmsMessageProcessor implements SmsMessageProcessorInterface
                     $message = $this->notificationRepository->getByEventCode($row['event_type_code'], $row['store_id']);
 
                     foreach ($this->json->unserialize($row['notification_data']) as $key => $value) {
-                        $message = mb_substr(str_replace('%' . $key . '%', $value, $message), 0, (int)$maxMessageLength ?? 0);
+                        $message = mb_substr(
+                            str_replace(
+                                '%' . $key . '%',
+                                $value,
+                                $message
+                            ),
+                            0,
+                            (int)$maxMessageLength ?? 0
+                        );
                     }
 
                     $messages[] = [
@@ -88,14 +94,7 @@ class SmsMessageProcessor implements SmsMessageProcessorInterface
                         'phone_number' => $row['customer_phone']
                     ];
                     $this->smsClientProvider->send($row['phone_number'], $message);
-                    $notification = $this->notificationRepository->get($row['entity_id']);
-                    $countAttempts = (int)$notification->getCountAttempts();
-                    $countAttempts = ++$countAttempts;
-                    $notification->setStatus('complete');
-                    $notification->setCountAttempts((int)$countAttempts);
-                    $this->notificationRepository->save(
-                        $notification->setEntityId((int)$row['entity_id'])
-                    );
+                    $this->updateMessageStatus($row);
                 }
 
                 $select->limitPage($page++, self::BATCH_SIZE);
@@ -103,5 +102,20 @@ class SmsMessageProcessor implements SmsMessageProcessorInterface
         }
 
         return $messages;
+    }
+
+    /**
+     * @param array $row
+     */
+    private function updateMessageStatus(array $row): void
+    {
+        $notification = $this->notificationRepository->get($row['entity_id']);
+        $countAttempts = (int)$notification->getCountAttempts();
+        $countAttempts = ++$countAttempts;
+        $notification->setStatus('complete');
+        $notification->setCountAttempts($countAttempts);
+        $this->notificationRepository->save(
+            $notification->setEntityId((int)$row['entity_id'])
+        );
     }
 }

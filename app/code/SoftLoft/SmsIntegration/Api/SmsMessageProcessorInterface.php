@@ -11,5 +11,8 @@ interface SmsMessageProcessorInterface
     const MAX_MESSAGE_LENGTH = 'SmsIntegration/configurable_cron/max_message_length';
     const MAX_COUNT_ATTEMPTS = 'SmsIntegration/configurable_cron/max_count_attempts';
 
+    /**
+     * @return array
+     */
     public function process(): array;
 }

@@ -8,11 +8,7 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 class Collection extends AbstractCollection
 {
-
-    /**
-     * @var string
-     */
-    protected $_idFieldName = 'entity_id';
+    protected string $_idFieldName = 'entity_id';
 
     /**
      * Define resource model

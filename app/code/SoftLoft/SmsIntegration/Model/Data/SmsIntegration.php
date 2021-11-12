@@ -12,10 +12,6 @@ class SmsIntegration extends AbstractExtensibleObject implements NotificationInt
      * @var int
      */
     private $entity_id;
-
-    /**
-     * @var string
-     */
     private string $eventTypeCode;
     private string $customerPhone;
     private int $countAttempts;
