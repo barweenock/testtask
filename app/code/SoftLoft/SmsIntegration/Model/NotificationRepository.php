@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+
 namespace SoftLoft\SmsIntegration\Model;
 
 use SoftLoft\SmsIntegration\Api\NotificationRepositoryInterface;
@@ -21,18 +22,24 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\ResourceConnection;
 
 class NotificationRepository implements NotificationRepositoryInterface
 {
+    /**
+     * @var array
+     */
+    private array $notifications = [];
+
     /**
      * @var SearchResultsInterfaceFactory
      */
     private SearchResultsInterfaceFactory $searchResultsFactory;
 
     /**
-     * @var IntegrationFactory
+     * @var NotificationInterfaceFactory
      */
-    private IntegrationFactory $integrationFactory;
+    private NotificationInterfaceFactory $integrationFactory;
 
     /**
      * @var StoreManagerInterface
@@ -72,17 +79,12 @@ class NotificationRepository implements NotificationRepositoryInterface
     /**
      * @var IntegrationCollectionFactory
      */
-    private IntegrationInterfaceFactory $dataIntegrationFactory;
-
-    /**
-     * @var IntegrationCollectionFactory
-     */
     private IntegrationCollectionFactory $integrationCollectionFactory;
+    private ResourceConnection $resourceConnection;
 
     /**
      * @param ResourceIntegration $resource
-     * @param IntegrationFactory $integrationFactory
-     * @param IntegrationInterfaceFactory $dataIntegrationFactory
+     * @param NotificationInterfaceFactory $integrationFactory
      * @param IntegrationCollectionFactory $integrationCollectionFactory
      * @param SearchResultsInterfaceFactory $searchResultsFactory
      * @param DataObjectHelper $dataObjectHelper
@@ -91,11 +93,11 @@ class NotificationRepository implements NotificationRepositoryInterface
      * @param CollectionProcessorInterface $collectionProcessor
      * @param JoinProcessorInterface $extensionAttributesJoinProcessor
      * @param ExtensibleDataObjectConverter $extensibleDataObjectConverter
+     * @param ResourceConnection $resourceConnection
      */
     public function __construct(
         ResourceIntegration $resource,
-        IntegrationFactory $integrationFactory,
-        IntegrationInterfaceFactory $dataIntegrationFactory,
+        NotificationInterfaceFactory $integrationFactory,
         IntegrationCollectionFactory $integrationCollectionFactory,
         SearchResultsInterfaceFactory $searchResultsFactory,
         DataObjectHelper $dataObjectHelper,
@@ -103,7 +105,8 @@ class NotificationRepository implements NotificationRepositoryInterface
         StoreManagerInterface $storeManager,
         CollectionProcessorInterface $collectionProcessor,
         JoinProcessorInterface $extensionAttributesJoinProcessor,
-        ExtensibleDataObjectConverter $extensibleDataObjectConverter
+        ExtensibleDataObjectConverter $extensibleDataObjectConverter,
+        ResourceConnection $resourceConnection
     ) {
         $this->resource = $resource;
         $this->integrationFactory = $integrationFactory;
@@ -116,16 +119,17 @@ class NotificationRepository implements NotificationRepositoryInterface
         $this->collectionProcessor = $collectionProcessor;
         $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
         $this->extensibleDataObjectConverter = $extensibleDataObjectConverter;
+        $this->resourceConnection = $resourceConnection;
     }
 
     /**
      * {@inheritdoc}
      */
     public function save(
-        NotificationInterface $notification
+        NotificationInterface $integration
     ) {
         $integrationData = $this->extensibleDataObjectConverter->toNestedArray(
-            $notification,
+            $integration,
             [],
             NotificationInterface::class
         );
@@ -146,16 +150,28 @@ class NotificationRepository implements NotificationRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function get($notificationId): NotificationInterface
+    public function getByEventCode($entTypeCode, $storeId): string
     {
-        $integration = $this->integrationFactory->create();
-        $this->resource->load($integration, $notificationId);
-
-        if (!$integration->getId()) {
-            throw new NoSuchEntityException(__('integration with id "%1" does not exist.', $notificationId));
+        if (isset($this->notifications[$entTypeCode][$storeId])) {
+            return $this->notifications[$entTypeCode][$storeId];
         }
 
-        return $integration->getDataModel();
+        $connection = $this->resourceConnection->getConnection();
+        $select = $connection->select()
+            ->from(
+                'sms_templates',
+                      'message_template'
+            )
+            ->where('event_type_code = ?', $entTypeCode)
+            ->where('store_id = ?', $storeId);
+        $record = $connection->fetchOne($select);
+
+        if (!$record) {
+            throw new NoSuchEntityException(__('message_template for entity_type_code "%1" does not exist.', $entTypeCode));
+        }
+
+        $this->notifications[$entTypeCode][$storeId] = $record;
+        return $record;
     }
 
     /**
@@ -163,7 +179,14 @@ class NotificationRepository implements NotificationRepositoryInterface
      */
     public function getList(
         SearchCriteriaInterface $searchCriteria
-    ): SearchResultsInterface{
+    ): SearchResultsInterface
+    {
+        /**
+         * event_type_code=forgot_password store_id=1 message=You have been reseted your password on email: %customer_email%
+         *
+         *
+         */
+
         $collection = $this->integrationCollectionFactory->create();
         $this->extensionAttributesJoinProcessor->process(
             $collection,
@@ -187,15 +210,15 @@ class NotificationRepository implements NotificationRepositoryInterface
      * {@inheritdoc}
      */
     public function delete(
-        NotificationInterface $notification
+        NotificationInterface $integration
     ): bool {
         try {
             $integrationModel = $this->integrationFactory->create();
-            $this->resource->load($integrationModel, $notification->getBannerId());
+            $this->resource->load($integrationModel, $integration->getEntityId());
             $this->resource->delete($integrationModel);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__(
-                'Could not delete the Banner: %1',
+                'Could not delete the Entity: %1',
                 $exception->getMessage()
             ));
         }
@@ -203,4 +226,9 @@ class NotificationRepository implements NotificationRepositoryInterface
         return true;
     }
 
+    public function get($notificationId): \SoftLoft\SmsIntegration\Api\Data\NotificationInterface
+    {
+        // TODO: Implement get() method.
+        return \SoftLoft\SmsIntegration\Api\Data\NotificationInterface;
+    }
 }

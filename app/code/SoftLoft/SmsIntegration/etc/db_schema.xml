@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
-	<table name="softloft_smsintegration" resource="default" engine="innodb" comment="softloft_smsintegration Table">
+	<table name="sms_messages" resource="default" engine="innodb" comment="sms messages Table">
 		<column xsi:type="smallint" name="entity_id" padding="6" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
 		<constraint xsi:type="primary" referenceId="PRIMARY">
 			<column name="entity_id"/>
@@ -9,6 +9,7 @@
         <column name="data" nullable="true" xsi:type="text" comment="data"/>
 		<column name="customer_phone" nullable="true" xsi:type="varchar" comment="customer_phone" length="255"/>
         <column name="count_attempts" nullable="true" xsi:type="smallint" comment="count_attempts"/>
+        <column name="store_id" nullable="true" xsi:type="smallint" comment="store_id"/>
         <column name="status" nullable="true" xsi:type="varchar" comment="status" length="255"/>
 	</table>
 	<table name="softloft_smsintegration_smstemplates" resource="default" engine="innodb" comment="softloft_smsintegration_smstemplates Table">
@@ -20,4 +21,9 @@
 		<column name="event_type_code" nullable="true" xsi:type="varchar" comment="Event Type Code" length="255"/>
 		<column name="message_template" nullable="true" xsi:type="varchar" comment="Message Template" length="255"/>
 	</table>
+    <table name="sms_templates">
+        <column name="message_template" xsi:type="varchar" length="255" nullable="false" />
+        <column name="store_id" xsi:type="int"  nullable="false" />
+        <column name="event_type_code" xsi:type="varchar" length="255" nullable="false" />
+    </table>
 </schema>

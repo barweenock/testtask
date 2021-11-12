@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SoftLoft\SmsIntegration\Api;
 
 use Magento\Framework\Api\SearchResultsInterface;
+use SoftLoft\SmsIntegration\Api\Data\NotificationInterface;
 
 interface NotificationRepositoryInterface
 {
@@ -36,6 +37,13 @@ interface NotificationRepositoryInterface
     public function getList(
         \Magento\Framework\Api\SearchCriteriaInterface $searchSearchCriteria
     ): SearchResultsInterface;
+
+    /**
+     * @param $ventTypeCode
+     * @param $storeId
+     * @return string
+     */
+    public function getByEventCode($ventTypeCode, $storeId): string;
 
     /**
      * Delete Entity

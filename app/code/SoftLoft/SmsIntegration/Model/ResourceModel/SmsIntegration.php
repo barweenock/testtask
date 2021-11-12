@@ -14,7 +14,7 @@ class SmsIntegration extends \Magento\Framework\Model\ResourceModel\Db\AbstractD
      */
     protected function _construct()
     {
-        $this->_init('softloft_smsintegration', 'entity_id');
+        $this->_init('sms_messages', 'entity_id');
     }
 }
 

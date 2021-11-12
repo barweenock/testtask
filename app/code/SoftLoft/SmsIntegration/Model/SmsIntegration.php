@@ -23,7 +23,7 @@ class SmsIntegration extends AbstractModel
     /**
      * @var string
      */
-    protected $_eventPrefix = 'softloft_smsintegration';
+    protected $_eventPrefix = 'sms_messages';
 
     /**
      * @param Context $context

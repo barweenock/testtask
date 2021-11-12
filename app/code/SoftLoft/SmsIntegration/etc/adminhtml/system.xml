@@ -35,7 +35,11 @@
                     <label>SmsIntegration password</label>
                 </field>
                 <field id="max_message_length" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>SmsIntegration Max text length</label>
+                    <label>SmsIntegration max text length</label>
+                    <validate>validate-number</validate>
+                </field>
+                <field id="max_count_attempts" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SmsIntegration max count attempts</label>
                     <validate>validate-number</validate>
                 </field>
             </group>
