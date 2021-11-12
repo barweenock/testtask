@@ -45,7 +45,7 @@ class EventLogger implements EventLoggerInterface
     {
         $notification = $this->notificationInterfaceFactory->create();
         $notification->setEventTypeCode($eventTypeCode);
-        $notification->setData($data);
+        $notification->setNotificationData($data);
         $notification->setCustomerPhone($customerPhone);
         $notification->setStatus($status);
         $this->notificationRepository->save($notification);

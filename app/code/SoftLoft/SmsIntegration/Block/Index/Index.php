@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Block\Index;
 
+use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 
-class Index extends \Magento\Framework\View\Element\Template
+class Index extends Template
 {
 
     /**

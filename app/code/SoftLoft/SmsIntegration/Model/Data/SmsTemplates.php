@@ -3,16 +3,18 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Model\Data;
 
+use Magento\Framework\Api\AbstractExtensibleObject;
+use SoftLoft\SmsIntegration\Api\Data\SmsTemplatesExtensionInterface;
 use SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface;
 
-class SmsTemplates extends \Magento\Framework\Api\AbstractExtensibleObject implements SmsTemplatesInterface
+class SmsTemplates extends AbstractExtensibleObject implements SmsTemplatesInterface
 {
 
     /**
      * Get smstemplates_id
      * @return string|null
      */
-    public function getSmstemplatesId()
+    public function getSmstemplatesId(): ?string
     {
         return $this->_get(self::SMSTEMPLATES_ID);
     }
@@ -20,18 +22,17 @@ class SmsTemplates extends \Magento\Framework\Api\AbstractExtensibleObject imple
     /**
      * Set smstemplates_id
      * @param string $smstemplatesId
-     * @return \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface
+     * @return SmsTemplatesInterface
      */
-    public function setSmstemplatesId($smstemplatesId)
+    public function setSmstemplatesId(string $smstemplatesId): SmsTemplatesInterface
     {
         return $this->setData(self::SMSTEMPLATES_ID, $smstemplatesId);
     }
 
     /**
-     * Get store_id
-     * @return string|null
+     * @return mixed|string|null
      */
-    public function getStoreId()
+    public function getStoreId(): ?string
     {
         return $this->_get(self::STORE_ID);
     }
@@ -39,38 +40,18 @@ class SmsTemplates extends \Magento\Framework\Api\AbstractExtensibleObject imple
     /**
      * Set store_id
      * @param string $storeId
-     * @return \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface
+     * @return SmsTemplatesInterface
      */
-    public function setStoreId($storeId)
+    public function setStoreId(string $storeId): SmsTemplatesInterface
     {
         return $this->setData(self::STORE_ID, $storeId);
-    }
-
-    /**
-     * Retrieve existing extension attributes object or create a new one.
-     * @return \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesExtensionInterface|null
-     */
-    public function getExtensionAttributes()
-    {
-        return $this->_getExtensionAttributes();
-    }
-
-    /**
-     * Set an extension attributes object.
-     * @param \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesExtensionInterface $extensionAttributes
-     * @return $this
-     */
-    public function setExtensionAttributes(
-        \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesExtensionInterface $extensionAttributes
-    ) {
-        return $this->_setExtensionAttributes($extensionAttributes);
     }
 
     /**
      * Get event_type_code
      * @return string|null
      */
-    public function getEventTypeCode()
+    public function getEventTypeCode(): ?string
     {
         return $this->_get(self::EVENT_TYPE_CODE);
     }
@@ -78,9 +59,9 @@ class SmsTemplates extends \Magento\Framework\Api\AbstractExtensibleObject imple
     /**
      * Set event_type_code
      * @param string $eventTypeCode
-     * @return \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface
+     * @return SmsTemplatesInterface
      */
-    public function setEventTypeCode($eventTypeCode)
+    public function setEventTypeCode(string $eventTypeCode): SmsTemplatesInterface
     {
         return $this->setData(self::EVENT_TYPE_CODE, $eventTypeCode);
     }
@@ -89,7 +70,7 @@ class SmsTemplates extends \Magento\Framework\Api\AbstractExtensibleObject imple
      * Get message_template
      * @return string|null
      */
-    public function getMessageTemplate()
+    public function getMessageTemplate(): ?string
     {
         return $this->_get(self::MESSAGE_TEMPLATE);
     }
@@ -97,9 +78,9 @@ class SmsTemplates extends \Magento\Framework\Api\AbstractExtensibleObject imple
     /**
      * Set message_template
      * @param string $messageTemplate
-     * @return \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface
+     * @return SmsTemplatesInterface
      */
-    public function setMessageTemplate($messageTemplate)
+    public function setMessageTemplate(string $messageTemplate): SmsTemplatesInterface
     {
         return $this->setData(self::MESSAGE_TEMPLATE, $messageTemplate);
     }

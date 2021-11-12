@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Api\Data;
 
-interface NotificationInterface extends \Magento\Framework\Api\ExtensibleDataInterface
+use Magento\Framework\Api\ExtensibleDataInterface;
+
+interface NotificationInterface extends ExtensibleDataInterface
 {
     const EVENT_TYPE_CODE = 'event_type_code';
-    const SMS_MESSAGE_TEMPLATE = 'template';
     const STORE_ID = 'store_id';
-
-
     const STATUS = 'status';
     const CONTENT = 'content';
     const ENTITY_ID = 'entity_id';
@@ -29,22 +28,6 @@ interface NotificationInterface extends \Magento\Framework\Api\ExtensibleDataInt
     public function getEntityId(): ?int;
 
     /**
-     * Set entity_id
-     * @param int $entityId
-     * @return \Magento\Framework\Api\ExtensibleDataInterface
-     */
-    public function getExtensionAttributes();
-
-    /**
-     * Set an extension attributes object.
-     * @param \Magento\Framework\Api\ExtensibleDataInterface $extensionAttributes
-     * @return $this
-     */
-    public function setExtensionAttributes(
-        \Magento\Framework\Api\ExtensibleDataInterface $extensionAttributes
-    );
-
-    /**
      * @return string
      */
     public function getMessage(): string;
@@ -53,14 +36,14 @@ interface NotificationInterface extends \Magento\Framework\Api\ExtensibleDataInt
      * Get content
      * @return string|null
      */
-    public function getData(): ?string;
+    public function getNotificationData(): ?string;
 
     /**
      * Set content
      * @param string $content
-     * @return \SoftLoft\SmsIntegration\Api\Data\NotificationInterface
+     * @return NotificationInterface
      */
-    public function setData(string $content): NotificationInterface;
+    public function setNotificationData(string $content): NotificationInterface;
 
     /**
      * Get EventTypeCode
@@ -71,7 +54,7 @@ interface NotificationInterface extends \Magento\Framework\Api\ExtensibleDataInt
     /**
      * Set link
      * @param string $eventTypeCode
-     * @return \SoftLoft\SmsIntegration\Api\Data\NotificationInterface
+     * @return NotificationInterface
      */
     public function setEventTypeCode(string $eventTypeCode): NotificationInterface;
 
@@ -84,7 +67,7 @@ interface NotificationInterface extends \Magento\Framework\Api\ExtensibleDataInt
     /**
      * Set customerPhone
      * @param string $customerPhone
-     * @return \SoftLoft\SmsIntegration\Api\Data\NotificationInterface
+     * @return NotificationInterface
      */
     public function setCustomerPhone(string $customerPhone): NotificationInterface;
 
@@ -98,7 +81,7 @@ interface NotificationInterface extends \Magento\Framework\Api\ExtensibleDataInt
     /**
      * Set is_active
      * @param string $countAttempts
-     * @return \SoftLoft\SmsIntegration\Api\Data\NotificationInterface
+     * @return NotificationInterface
      */
     public function setCountAttempts(string $countAttempts): NotificationInterface;
 
@@ -113,7 +96,7 @@ interface NotificationInterface extends \Magento\Framework\Api\ExtensibleDataInt
      * Set status
      *
      * @param string $status
-     * @return \SoftLoft\SmsIntegration\Api\Data\NotificationInterface
+     * @return NotificationInterface
      */
     public function setStatus(string $status): NotificationInterface;
 }

@@ -7,7 +7,6 @@ use Psr\Log\LoggerInterface;
 
 class SmsIntegration
 {
-
     protected LoggerInterface $logger;
 
     /**

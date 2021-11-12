@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Api\Data;
 
-interface SmsTemplatesInterface extends \Magento\Framework\Api\ExtensibleDataInterface
+use Magento\Framework\Api\ExtensibleDataInterface;
+
+interface SmsTemplatesInterface extends ExtensibleDataInterface
 {
 
     const EVENT_TYPE_CODE = 'event_type_code';
@@ -15,67 +17,52 @@ interface SmsTemplatesInterface extends \Magento\Framework\Api\ExtensibleDataInt
      * Get smstemplates_id
      * @return string|null
      */
-    public function getSmstemplatesId();
+    public function getSmstemplatesId(): ?string;
 
     /**
      * Set smstemplates_id
      * @param string $smstemplatesId
-     * @return \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface
+     * @return SmsTemplatesInterface
      */
-    public function setSmstemplatesId($smstemplatesId);
+    public function setSmstemplatesId(string $smstemplatesId): SmsTemplatesInterface;
 
     /**
      * Get store_id
      * @return string|null
      */
-    public function getStoreId();
+    public function getStoreId(): ?string;
 
     /**
      * Set store_id
      * @param string $storeId
-     * @return \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface
+     * @return SmsTemplatesInterface
      */
-    public function setStoreId($storeId);
-
-    /**
-     * Retrieve existing extension attributes object or create a new one.
-     * @return \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesExtensionInterface|null
-     */
-    public function getExtensionAttributes();
-
-    /**
-     * Set an extension attributes object.
-     * @param \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesExtensionInterface $extensionAttributes
-     * @return $this
-     */
-    public function setExtensionAttributes(
-        \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesExtensionInterface $extensionAttributes
-    );
+    public function setStoreId(string $storeId): SmsTemplatesInterface;
 
     /**
      * Get event_type_code
      * @return string|null
      */
-    public function getEventTypeCode();
+    public function getEventTypeCode(): ?string;
 
     /**
      * Set event_type_code
      * @param string $eventTypeCode
-     * @return \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface
+     * @return SmsTemplatesInterface
      */
-    public function setEventTypeCode($eventTypeCode);
+    public function setEventTypeCode(string $eventTypeCode): SmsTemplatesInterface;
 
     /**
      * Get message_template
      * @return string|null
      */
-    public function getMessageTemplate();
+    public function getMessageTemplate(): ?string;
 
     /**
      * Set message_template
      * @param string $messageTemplate
-     * @return \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface
+     * @return SmsTemplatesInterface
      */
-    public function setMessageTemplate($messageTemplate);
+    public function setMessageTemplate(string $messageTemplate): SmsTemplatesInterface;
 }
 

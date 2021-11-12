@@ -225,9 +225,9 @@ class NotificationRepository implements NotificationRepositoryInterface
         return true;
     }
 
-    public function get($notificationId): \SoftLoft\SmsIntegration\Api\Data\NotificationInterface
+    public function get($notificationId): NotificationInterface
     {
         // TODO: Implement get() method.
-        return \SoftLoft\SmsIntegration\Api\Data\NotificationInterface;
+        return NotificationInterface;
     }
 }

@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace SoftLoft\SmsIntegration\Model\SmsTemplates;
 
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Ui\DataProvider\AbstractDataProvider;
 use SoftLoft\SmsIntegration\Model\ResourceModel\SmsTemplates\CollectionFactory;
 
-class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
+class DataProvider extends AbstractDataProvider
 {
 
     protected $collection;

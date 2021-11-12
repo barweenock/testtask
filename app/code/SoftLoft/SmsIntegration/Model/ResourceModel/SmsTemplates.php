@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Model\ResourceModel;
 
-class SmsTemplates extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
-{
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
+class SmsTemplates extends AbstractDb
+{
     /**
      * Define resource model
      *
@@ -16,6 +17,12 @@ class SmsTemplates extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $this->_init('softloft_smsintegration_smstemplates', 'smstemplates_id');
     }
 
+    /**
+     * @param $connection
+     * @param $storeId
+     * @param $entTypeCode
+     * @return mixed
+     */
     public function getSmsTemplate($connection, $storeId, $entTypeCode)
     {
         $select = $connection->select()

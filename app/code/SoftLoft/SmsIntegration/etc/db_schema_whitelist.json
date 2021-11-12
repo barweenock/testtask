@@ -19,5 +19,16 @@
             "store_id": true,
             "event_type_code": true
         }
+    },
+    "softloft_smsintegration_smstemplates": {
+        "column": {
+            "smstemplates_id": true,
+            "store_id": true,
+            "event_type_code": true,
+            "message_template": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
     }
 }

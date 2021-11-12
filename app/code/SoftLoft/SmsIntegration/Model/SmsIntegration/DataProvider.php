@@ -4,100 +4,64 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Model\SmsIntegration;
 
-use SoftLoft\SmsIntegration\Api\IntegrationRepositoryInterface;
-use SoftLoft\SmsIntegration\Api\Data\IntegrationInterface;
-use SoftLoft\SmsIntegration\Model\ResourceModel\SmsIntegration\Collection;
+use Magento\Framework\App\Request\DataPersistorInterface;
 use SoftLoft\SmsIntegration\Model\ResourceModel\SmsIntegration\CollectionFactory;
-use Magento\Framework\App\RequestInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
-use Magento\Framework\Api\DataObjectHelper;
 
 class DataProvider extends AbstractDataProvider
 {
-    /**
-     * @var Collection
-     */
     protected $collection;
 
-    /**
-     * @var array
-     */
-    private $loadedData;
+    protected $loadedData;
+    protected $dataPersistor;
+
 
     /**
-     * @var RequestInterface
-     */
-    private $request;
-
-    /**
-     * @var IntegrationRepositoryInterface
-     */
-    private IntegrationRepositoryInterface $integrationRepository;
-
-    /**
-     * @var DataObjectHelper
-     */
-    private DataObjectHelper $dataObjectHelper;
-
-    /**
+     * Constructor
+     *
      * @param string $name
      * @param string $primaryFieldName
      * @param string $requestFieldName
-     * @param CollectionFactory $collectionFactory
-     * @param RequestInterface $request
-     * @param IntegrationRepositoryInterface $integrationRepository
-     * @param DataObjectHelper $dataObjectHelper
+     * @param \SoftLoft\SmsIntegration\Model\ResourceModel\SmsIntegration\CollectionFactory $collectionFactory
+     * @param DataPersistorInterface $dataPersistor
      * @param array $meta
      * @param array $data
      */
     public function __construct(
-        string $name,
-        string $primaryFieldName,
-        string $requestFieldName,
+        $name,
+        $primaryFieldName,
+        $requestFieldName,
         CollectionFactory $collectionFactory,
-        RequestInterface $request,
-        IntegrationRepositoryInterface $integrationRepository,
-        DataObjectHelper $dataObjectHelper,
+        DataPersistorInterface $dataPersistor,
         array $meta = [],
         array $data = []
     ) {
         $this->collection = $collectionFactory->create();
-        $this->request = $request;
-        $this->integrationRepository = $integrationRepository;
+        $this->dataPersistor = $dataPersistor;
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
-        $this->dataObjectHelper = $dataObjectHelper;
     }
 
     /**
      * Get data
      *
      * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getData(): ?array
+    public function getData()
     {
         if (isset($this->loadedData)) {
             return $this->loadedData;
         }
         $items = $this->collection->getItems();
         foreach ($items as $model) {
-            $this->loadedData[$model->getEntityId()] = $model->getData();
+            $this->loadedData[$model->getId()] = $model->getData();
         }
-
-        $entityId = $this->request->getParam('entity_id');
-
-        if ($entityId) {
-            $data = $this->integrationRepository->get($entityId);
-        }
+        $data = $this->dataPersistor->get('softloft_smsintegration_smstemplates');
 
         if (!empty($data)) {
             $model = $this->collection->getNewEmptyItem();
-            $this->dataObjectHelper->populateWithArray(
-                $model,
-                $data->__toArray(),
-                IntegrationInterface::class
-            );
-            $this->loadedData[$model->getEntityId()] = $model->getData();
+            $model->setData($data);
+            $this->loadedData[$model->getId()] = $model->getData();
+            $this->dataPersistor->clear('softloft_smsintegration_smstemplates');
         }
 
         return $this->loadedData;

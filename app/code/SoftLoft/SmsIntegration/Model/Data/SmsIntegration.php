@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Model\Data;
 
+use Magento\Framework\Api\AbstractExtensibleObject;
 use SoftLoft\SmsIntegration\Api\Data\NotificationInterface;
 
-class SmsIntegration extends \Magento\Framework\Api\AbstractExtensibleObject implements NotificationInterface
+class SmsIntegration extends AbstractExtensibleObject implements NotificationInterface
 {
     /**
      * @var int
@@ -38,6 +39,11 @@ class SmsIntegration extends \Magento\Framework\Api\AbstractExtensibleObject imp
      */
     private string $status;
 
+    /**
+     * @var string
+     */
+    private $getmessage;
+
 
     /**
      * @inheritdoc
@@ -60,23 +66,6 @@ class SmsIntegration extends \Magento\Framework\Api\AbstractExtensibleObject imp
     /**
      * @inheritdoc
      */
-    public function getExtensionAttributes()
-    {
-        return $this->_getExtensionAttributes();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setExtensionAttributes(
-        \Magento\Framework\Api\ExtensibleDataInterface $extensionAttributes
-    ) {
-        return $this->_setExtensionAttributes($extensionAttributes);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getEventTypeCode(): ?string
     {
         return $this->eventTypeCode;
@@ -94,7 +83,7 @@ class SmsIntegration extends \Magento\Framework\Api\AbstractExtensibleObject imp
     /**
      * @inheritdoc
      */
-    public function getData(): ?string
+    public function getNotificationData(): ?string
     {
         return $this->data;
     }
@@ -102,9 +91,9 @@ class SmsIntegration extends \Magento\Framework\Api\AbstractExtensibleObject imp
     /**
      * @inheritdoc
      */
-    public function setData(string $data): NotificationInterface
+    public function setNotificationData(string $content): NotificationInterface
     {
-        $this->data = $data;
+        $this->data = $content;
         return $this;
     }
 
@@ -152,5 +141,16 @@ class SmsIntegration extends \Magento\Framework\Api\AbstractExtensibleObject imp
     public function getStatus(): ?string
     {
         return $this->status;
+    }
+
+    public function getMessage(): string
+    {
+        return $this->getmessage;
+    }
+
+    public function setMessage(string $message): string
+    {
+        $this->getmessage = $message;
+        return $this->getmessage;
     }
 }

@@ -23,7 +23,7 @@
              parent="SoftLoft_SmsIntegration::menu"
              action="softloft_smsintegration/smstemplates/index"/>
         <add id="SoftLoft_SmsIntegration::softloft_smsintegration_smsintegration"
-             title="Sms Integration"
+             title="Sms Messages"
              translate="title"
              module="SoftLoft_SmsIntegration"
              sortOrder="900"

@@ -3,7 +3,11 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Model\ResourceModel\SmsTemplates;
 
-class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
+use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+use SoftLoft\SmsIntegration\Model\ResourceModel\SmsTemplates as ResourceModel;
+use SoftLoft\SmsIntegration\Model\SmsTemplates;
+
+class Collection extends AbstractCollection
 {
 
     /**
@@ -19,8 +23,8 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     protected function _construct()
     {
         $this->_init(
-            \SoftLoft\SmsIntegration\Model\SmsTemplates::class,
-            \SoftLoft\SmsIntegration\Model\ResourceModel\SmsTemplates::class
+            SmsTemplates::class,
+            ResourceModel::class
         );
     }
 }

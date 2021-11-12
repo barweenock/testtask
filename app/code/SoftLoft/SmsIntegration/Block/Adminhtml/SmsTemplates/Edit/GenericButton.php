@@ -11,7 +11,7 @@ abstract class GenericButton
     protected $context;
 
     /**
-     * @param \Magento\Backend\Block\Widget\Context $context
+     * @param Context $context
      */
     public function __construct(Context $context)
     {
@@ -23,7 +23,7 @@ abstract class GenericButton
      *
      * @return int|null
      */
-    public function getModelId()
+    public function getModelId(): ?int
     {
         return $this->context->getRequest()->getParam('smstemplates_id');
     }
@@ -31,11 +31,11 @@ abstract class GenericButton
     /**
      * Generate url by route and parameters
      *
-     * @param   string $route
-     * @param   array $params
+     * @param string $route
+     * @param array $params
      * @return  string
      */
-    public function getUrl($route = '', $params = [])
+    public function getUrl(string $route = '', array $params = []): string
     {
         return $this->context->getUrlBuilder()->getUrl($route, $params);
     }
