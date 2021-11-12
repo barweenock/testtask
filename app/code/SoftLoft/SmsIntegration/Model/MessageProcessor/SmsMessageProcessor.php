@@ -87,7 +87,7 @@ class SmsMessageProcessor implements SmsMessageProcessorInterface
                         'message' => $message,
                         'phone_number' => $row['customer_phone']
                     ];
-                    //$this->smsClientProvider->send($row['phone_number'], $message);
+                    $this->smsClientProvider->send($row['phone_number'], $message);
                     $notification = $this->notificationRepository->get($row['entity_id']);
                     $countAttempts = (int)$notification->getCountAttempts();
                     $countAttempts = ++$countAttempts;
