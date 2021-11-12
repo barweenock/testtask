@@ -44,6 +44,7 @@ class EventLogger implements EventLoggerInterface
         string $eventTypeCode,
         string $data,
         string $customerPhone,
+        int $storeId,
         string $status
     ): void {
         $notification = $this->notificationInterfaceFactory->create();
@@ -51,23 +52,31 @@ class EventLogger implements EventLoggerInterface
         $notification->setNotificationData($data);
         $notification->setCustomerPhone($customerPhone);
         $notification->setStatus($status);
+        $notification->setStoreId($storeId);
+        $notification->setCountAttempts(0);
         $this->notificationRepository->save($notification);
 
         if ($this->scopeConfig->getValue(self::ENABLE_LOGGER_PATH)) {
-            $this->saveNotificationLog($eventTypeCode, $data, $customerPhone, $status);
+            $this->saveNotificationLog($eventTypeCode, $data, $customerPhone, $storeId, $status);
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public function saveNotificationLog(string $eventTypeCode, string $data, string $customerPhone, string $status): void
-    {
+    public function saveNotificationLog(
+        string $eventTypeCode,
+        string $data,
+        string $customerPhone,
+        int $storeId,
+        string $status
+    ): void {
         $this->logger->info(
             'Event type code: ' . $eventTypeCode . ', '
            . 'Data: ' . $data . ', '
            . 'Customer Phone: ' . $customerPhone . ', '
-           . 'Status: '. $status
+           . 'Status: '. $status . ', '
+           . 'Store Id: '. $storeId
         );
     }
 }

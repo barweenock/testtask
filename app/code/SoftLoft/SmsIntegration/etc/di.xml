@@ -12,7 +12,7 @@
     <preference for="SoftLoft\SmsIntegration\Api\SmsClientProviderInterface" type="SoftLoft\SmsIntegration\Model\Client\DefaultSmsClient"/>
     <virtualType name="SoftLoft\SmsIntegration\Model\ResourceModel\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
         <arguments>
-            <argument name="mainTable" xsi:type="string">softloft_smsintegration</argument>
+            <argument name="mainTable" xsi:type="string">sms_messages</argument>
             <argument name="resourceModel" xsi:type="string">SoftLoft\SmsIntegration\Model\ResourceModel\SmsIntegration</argument>
         </arguments>
     </virtualType>

@@ -6,9 +6,9 @@
 			<column name="entity_id"/>
 		</constraint>
         <column name="event_type_code" nullable="true" xsi:type="text" comment="content"/>
-        <column name="data" nullable="true" xsi:type="text" comment="data"/>
+        <column name="notification_data" nullable="true" xsi:type="text" comment="notification_data"/>
 		<column name="customer_phone" nullable="true" xsi:type="varchar" comment="customer_phone" length="255"/>
-        <column name="count_attempts" nullable="true" xsi:type="smallint" comment="count_attempts"/>
+        <column name="count_attempts" nullable="true" xsi:type="smallint" comment="count_attempts" default="0"/>
         <column name="store_id" nullable="true" xsi:type="smallint" comment="store_id"/>
         <column name="status" nullable="true" xsi:type="varchar" comment="status" length="255"/>
 	</table>

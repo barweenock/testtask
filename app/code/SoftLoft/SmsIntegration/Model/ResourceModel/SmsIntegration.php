@@ -8,7 +8,6 @@ use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 class SmsIntegration extends AbstractDb
 {
-
     /**
      * Define resource model
      *

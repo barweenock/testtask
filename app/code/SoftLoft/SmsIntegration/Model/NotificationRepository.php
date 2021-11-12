@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-
 namespace SoftLoft\SmsIntegration\Model;
 
 use SoftLoft\SmsIntegration\Api\NotificationRepositoryInterface;
 use SoftLoft\SmsIntegration\Api\Data\NotificationInterface;
-use SoftLoft\SmsIntegration\Api\Data\NotificationInterfaceFactory;
+use SoftLoft\SmsIntegration\Api\NotificationInterfaceFactory;
 use SoftLoft\SmsIntegration\Model\ResourceModel\SmsIntegration as ResourceIntegration;
 use SoftLoft\SmsIntegration\Model\ResourceModel\SmsIntegration\CollectionFactory as IntegrationCollectionFactory;
-use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Api\ExtensibleDataObjectConverter;
 use Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
@@ -20,8 +18,6 @@ use Magento\Framework\Api\SearchResultsInterfaceFactory;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Reflection\DataObjectProcessor;
-use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\ResourceConnection;
 use SoftLoft\SmsIntegration\Model\ResourceModel\SmsTemplates;
 
@@ -31,74 +27,21 @@ class NotificationRepository implements NotificationRepositoryInterface
      * @var array
      */
     private array $notifications = [];
-
-    /**
-     * @var SearchResultsInterfaceFactory
-     */
     private SearchResultsInterfaceFactory $searchResultsFactory;
-
-    /**
-     * @var NotificationInterfaceFactory
-     */
-    private NotificationInterfaceFactory $integrationFactory;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private StoreManagerInterface $storeManager;
-
-    /**
-     * @var DataObjectProcessor
-     */
-    private DataObjectProcessor $dataObjectProcessor;
-
-    /**
-     * @var JoinProcessorInterface
-     */
+    private SmsIntegrationFactory $integrationFactory;
     private JoinProcessorInterface $extensionAttributesJoinProcessor;
-
-    /**
-     * @var CollectionProcessorInterface
-     */
     private CollectionProcessorInterface $collectionProcessor;
-
-    /**
-     * @var DataObjectHelper
-     */
-    private DataObjectHelper $dataObjectHelper;
-
-    /**
-     * @var ExtensibleDataObjectConverter
-     */
     private ExtensibleDataObjectConverter $extensibleDataObjectConverter;
-
-    /**
-     * @var ResourceIntegration
-     */
     private ResourceIntegration $resource;
-
-    /**
-     * @var IntegrationCollectionFactory
-     */
     private IntegrationCollectionFactory $integrationCollectionFactory;
-
-    /**
-     * @var ResourceConnection
-     */
     private ResourceConnection $resourceConnection;
-    /**
-     * @var SmsTemplates
-     */
-    private $smsTemplates;
+    private SmsTemplates $smsTemplates;
 
     /**
      * @param ResourceIntegration $resource
-     * @param NotificationInterfaceFactory $integrationFactory
+     * @param SmsIntegrationFactory $integrationFactory
      * @param IntegrationCollectionFactory $integrationCollectionFactory
      * @param SearchResultsInterfaceFactory $searchResultsFactory
-     * @param DataObjectHelper $dataObjectHelper
-     * @param DataObjectProcessor $dataObjectProcessor
-     * @param StoreManagerInterface $storeManager
      * @param CollectionProcessorInterface $collectionProcessor
      * @param JoinProcessorInterface $extensionAttributesJoinProcessor
      * @param ExtensibleDataObjectConverter $extensibleDataObjectConverter
@@ -106,27 +49,20 @@ class NotificationRepository implements NotificationRepositoryInterface
      * @param SmsTemplates $smsTemplates
      */
     public function __construct(
-        ResourceIntegration $resource,
-        NotificationInterfaceFactory $integrationFactory,
-        IntegrationCollectionFactory $integrationCollectionFactory,
+        ResourceIntegration           $resource,
+        SmsIntegrationFactory         $integrationFactory,
+        IntegrationCollectionFactory  $integrationCollectionFactory,
         SearchResultsInterfaceFactory $searchResultsFactory,
-        DataObjectHelper $dataObjectHelper,
-        DataObjectProcessor $dataObjectProcessor,
-        StoreManagerInterface $storeManager,
-        CollectionProcessorInterface $collectionProcessor,
-        JoinProcessorInterface $extensionAttributesJoinProcessor,
+        CollectionProcessorInterface  $collectionProcessor,
+        JoinProcessorInterface        $extensionAttributesJoinProcessor,
         ExtensibleDataObjectConverter $extensibleDataObjectConverter,
-        ResourceConnection $resourceConnection,
-        SmsTemplates $smsTemplates
+        ResourceConnection            $resourceConnection,
+        SmsTemplates                  $smsTemplates
     ) {
         $this->resource = $resource;
         $this->integrationFactory = $integrationFactory;
         $this->integrationCollectionFactory = $integrationCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
-        $this->dataObjectHelper = $dataObjectHelper;
-        $this->dataIntegrationFactory = $integrationFactory;
-        $this->dataObjectProcessor = $dataObjectProcessor;
-        $this->storeManager = $storeManager;
         $this->collectionProcessor = $collectionProcessor;
         $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
         $this->extensibleDataObjectConverter = $extensibleDataObjectConverter;
@@ -138,10 +74,10 @@ class NotificationRepository implements NotificationRepositoryInterface
      * {@inheritdoc}
      */
     public function save(
-        NotificationInterface $integration
-    ) {
+        NotificationInterface $notification
+    ): NotificationInterface {
         $integrationData = $this->extensibleDataObjectConverter->toNestedArray(
-            $integration,
+            $notification,
             [],
             NotificationInterface::class
         );
@@ -162,20 +98,20 @@ class NotificationRepository implements NotificationRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getByEventCode($entTypeCode, $storeId): string
+    public function getByEventCode($ventTypeCode, $storeId): string
     {
-        if (isset($this->notifications[$entTypeCode][$storeId])) {
-            return $this->notifications[$entTypeCode][$storeId];
+        if (isset($this->notifications[$ventTypeCode][$storeId])) {
+            return $this->notifications[$ventTypeCode][$storeId];
         }
 
         $connection = $this->resourceConnection->getConnection();
 
-        $record = $this->smsTemplates->getSmsTemplate($connection, $storeId, $entTypeCode);
+        $record = $this->smsTemplates->getSmsTemplate($connection, $storeId, $ventTypeCode);
         if (!$record) {
-            throw new NoSuchEntityException(__('message_template for entity_type_code "%1" does not exist.', $entTypeCode));
+            throw new NoSuchEntityException(__('message_template for entity_type_code "%1" does not exist.', $ventTypeCode));
         }
 
-        $this->notifications[$entTypeCode][$storeId] = $record;
+        $this->notifications[$ventTypeCode][$storeId] = $record;
         return $record;
     }
 
@@ -183,7 +119,7 @@ class NotificationRepository implements NotificationRepositoryInterface
      * {@inheritdoc}
      */
     public function getList(
-        SearchCriteriaInterface $searchCriteria
+        SearchCriteriaInterface $searchSearchSearchCriteria
     ): SearchResultsInterface
     {
         $collection = $this->integrationCollectionFactory->create();
@@ -191,9 +127,9 @@ class NotificationRepository implements NotificationRepositoryInterface
             $collection,
             NotificationInterface::class
         );
-        $this->collectionProcessor->process($searchCriteria, $collection);
+        $this->collectionProcessor->process($searchSearchSearchCriteria, $collection);
         $searchResults = $this->searchResultsFactory->create();
-        $searchResults->setSearchCriteria($searchCriteria);
+        $searchResults->setSearchCriteria($searchSearchSearchCriteria);
         $items = [];
         foreach ($collection as $model) {
             $items[] = $model->getDataModel();
@@ -227,7 +163,13 @@ class NotificationRepository implements NotificationRepositoryInterface
 
     public function get($notificationId): NotificationInterface
     {
-        // TODO: Implement get() method.
-        return NotificationInterface;
+        $smsTemplates = $this->integrationFactory->create();
+        $this->resource->load($smsTemplates, $notificationId);
+
+        if (!$smsTemplates->getId()) {
+            throw new NoSuchEntityException(__('SmsTemplates with id "%1" does not exist.', $notificationId));
+        }
+
+        return $smsTemplates->getDataModel();
     }
 }

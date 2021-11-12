@@ -12,6 +12,7 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Store\Model\StoreManagerInterface;
+use SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface;
 use SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterfaceFactory;
 use SoftLoft\SmsIntegration\Api\Data\SmsTemplatesSearchResultsInterfaceFactory;
 use SoftLoft\SmsIntegration\Api\SmsTemplatesRepositoryInterface;
@@ -34,13 +35,10 @@ class SmsTemplatesRepository implements SmsTemplatesRepositoryInterface
 
     private $collectionProcessor;
 
-    private $storeManager;
 
-    protected $smsTemplatesCollectionFactory;
-
-    protected $searchResultsFactory;
-
-    protected $smsTemplatesFactory;
+    protected SmsTemplatesCollectionFactory $smsTemplatesCollectionFactory;
+    protected SmsTemplatesSearchResultsInterfaceFactory $searchResultsFactory;
+    protected SmsTemplatesFactory $smsTemplatesFactory;
 
 
     /**
@@ -86,17 +84,12 @@ class SmsTemplatesRepository implements SmsTemplatesRepositoryInterface
      * {@inheritdoc}
      */
     public function save(
-        \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface $smsTemplates
+        SmsTemplatesInterface $smsTemplates
     ) {
-        /* if (empty($smsTemplates->getStoreId())) {
-            $storeId = $this->storeManager->getStore()->getId();
-            $smsTemplates->setStoreId($storeId);
-        } */
-        
         $smsTemplatesData = $this->extensibleDataObjectConverter->toNestedArray(
             $smsTemplates,
             [],
-            \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface::class
+            SmsTemplatesInterface::class
         );
         
         $smsTemplatesModel = $this->smsTemplatesFactory->create()->setData($smsTemplatesData);
@@ -135,7 +128,7 @@ class SmsTemplatesRepository implements SmsTemplatesRepositoryInterface
         
         $this->extensionAttributesJoinProcessor->process(
             $collection,
-            \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface::class
+            SmsTemplatesInterface::class
         );
         
         $this->collectionProcessor->process($criteria, $collection);
@@ -157,7 +150,7 @@ class SmsTemplatesRepository implements SmsTemplatesRepositoryInterface
      * {@inheritdoc}
      */
     public function delete(
-        \SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface $smsTemplates
+        SmsTemplatesInterface $smsTemplates
     ) {
         try {
             $smsTemplatesModel = $this->smsTemplatesFactory->create();

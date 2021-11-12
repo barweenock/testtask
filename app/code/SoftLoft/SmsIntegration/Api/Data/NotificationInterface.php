@@ -27,8 +27,6 @@ interface NotificationInterface extends ExtensibleDataInterface
      */
     public function getEntityId(): ?int;
 
-
-
     /**
      * Get content
      * @return string|null
@@ -37,10 +35,10 @@ interface NotificationInterface extends ExtensibleDataInterface
 
     /**
      * Set content
-     * @param string $content
+     * @param string $notificationData
      * @return NotificationInterface
      */
-    public function setNotificationData(string $content): NotificationInterface;
+    public function setNotificationData(string $notificationData): NotificationInterface;
 
     /**
      * Get EventTypeCode
@@ -71,16 +69,16 @@ interface NotificationInterface extends ExtensibleDataInterface
     /**
      * Get is_active
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getCountAttempts(): ?string;
+    public function getCountAttempts(): ?int;
 
     /**
      * Set is_active
-     * @param string $countAttempts
+     * @param int $countAttempts
      * @return NotificationInterface
      */
-    public function setCountAttempts(string $countAttempts): NotificationInterface;
+    public function setCountAttempts(int $countAttempts): NotificationInterface;
 
     /**
      * Get status
@@ -96,5 +94,16 @@ interface NotificationInterface extends ExtensibleDataInterface
      * @return NotificationInterface
      */
     public function setStatus(string $status): NotificationInterface;
+
+    /**
+     * @param int $storeId
+     * @return NotificationInterface
+     */
+    public function setStoreId(int $storeId): NotificationInterface;
+
+    /**
+     * @return int
+     */
+    public function getStoreId(): int;
 }
 

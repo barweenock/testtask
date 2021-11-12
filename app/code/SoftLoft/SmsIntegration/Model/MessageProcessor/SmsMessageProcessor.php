@@ -79,20 +79,20 @@ class SmsMessageProcessor implements SmsMessageProcessorInterface
                     }
                     $message = $this->notificationRepository->getByEventCode($row['event_type_code'], $row['store_id']);
 
-                    foreach ($this->json->unserialize($row['data']) as $key => $value) {
-                        $message = mb_substr(str_replace('%' . $key . '%', $value, $message), 0, $maxMessageLength ?? 0);
+                    foreach ($this->json->unserialize($row['notification_data']) as $key => $value) {
+                        $message = mb_substr(str_replace('%' . $key . '%', $value, $message), 0, (int)$maxMessageLength ?? 0);
                     }
 
                     $messages[] = [
                         'message' => $message,
                         'phone_number' => $row['customer_phone']
                     ];
-                    $this->smsClientProvider->send($row['phone_number'], $message);
+                    //$this->smsClientProvider->send($row['phone_number'], $message);
                     $notification = $this->notificationRepository->get($row['entity_id']);
                     $countAttempts = (int)$notification->getCountAttempts();
                     $countAttempts = ++$countAttempts;
                     $notification->setStatus('complete');
-                    $notification->setCountAttempts((string)$countAttempts);
+                    $notification->setCountAttempts((int)$countAttempts);
                     $this->notificationRepository->save($notification);
                 }
 

@@ -12,12 +12,14 @@ interface EventLoggerInterface
      * @param string $eventTypeCode
      * @param string $data
      * @param string $customerPhone
+     * @param int $storeId
      * @param string $status
      */
     public function saveNotificationData(
         string $eventTypeCode,
         string $data,
         string $customerPhone,
+        int $storeId,
         string $status
     ): void;
 
@@ -25,12 +27,14 @@ interface EventLoggerInterface
      * @param string $eventTypeCode
      * @param string $data
      * @param string $customerPhone
+     * @param int $storeId
      * @param string $status
      */
     public function saveNotificationLog(
         string $eventTypeCode,
         string $data,
         string $customerPhone,
+        int $storeId,
         string $status
     ): void;
 }

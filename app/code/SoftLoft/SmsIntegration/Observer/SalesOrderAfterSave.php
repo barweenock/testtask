@@ -40,6 +40,7 @@ class SalesOrderAfterSave implements ObserverInterface
             self::EVENT_TYPE_CODE,
             $this->serializeData($order),
             $order->getShippingAddress()->getTelephone(),
+            $order->getStoreId(),
             self::EVENT_STATUS_CODE
         );
     }

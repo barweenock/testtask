@@ -17,27 +17,11 @@ class SmsIntegration extends AbstractExtensibleObject implements NotificationInt
      * @var string
      */
     private string $eventTypeCode;
-
-
-    /**
-     * @var string
-     */
-    private string $data;
-
-    /**
-     * @var string
-     */
     private string $customerPhone;
-
-    /**
-     * @var string
-     */
-    private string $countAttempts;
-
-    /**
-     * @var string
-     */
+    private int $countAttempts;
     private string $status;
+    private int $storeId;
+    private string $notificationData;
 
     /**
      * @inheritdoc
@@ -69,15 +53,15 @@ class SmsIntegration extends AbstractExtensibleObject implements NotificationInt
      */
     public function getNotificationData(): ?string
     {
-        return $this->data;
+        return $this->notificationData;
     }
 
     /**
      * @inheritdoc
      */
-    public function setNotificationData(string $content): NotificationInterface
+    public function setNotificationData(string $notificationData): NotificationInterface
     {
-        $this->data = $content;
+        $this->notificationData = $notificationData;
         return $this;
     }
 
@@ -101,7 +85,7 @@ class SmsIntegration extends AbstractExtensibleObject implements NotificationInt
     /**
      * @inheritdoc
      */
-    public function getCountAttempts(): ?string
+    public function getCountAttempts(): ?int
     {
         return $this->countAttempts;
     }
@@ -115,15 +99,37 @@ class SmsIntegration extends AbstractExtensibleObject implements NotificationInt
         return $this;
     }
 
-
-    public function setCountAttempts(string $countAttempts): NotificationInterface
+    /**
+     * @inheritdoc
+     */
+    public function setCountAttempts(int $countAttempts): NotificationInterface
     {
         $this->countAttempts = $countAttempts;
         return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getStatus(): ?string
     {
         return $this->status;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setStoreId(int $storeId): NotificationInterface
+    {
+        $this->storeId = $storeId;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getStoreId(): int
+    {
+        return $this->storeId;
     }
 }
