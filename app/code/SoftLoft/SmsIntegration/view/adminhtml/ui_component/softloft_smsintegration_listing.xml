@@ -18,8 +18,7 @@
 			</storageConfig>
 			<updateUrl path="mui/index/render"/>
 		</settings>
-
-		<dataProvider name="softloft_smsintegration_listing_data_source" class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <dataProvider name="softloft_smsintegration_listing_data_source" class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
 			<settings>
 				<requestFieldName>entity_id</requestFieldName>
 				<primaryFieldName>entity_id</primaryFieldName>

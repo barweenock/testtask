@@ -10,11 +10,9 @@ use Magento\Ui\DataProvider\AbstractDataProvider;
 
 class DataProvider extends AbstractDataProvider
 {
-    protected $collection;
-
-    protected $loadedData;
-    protected $dataPersistor;
-
+    protected CollectionFactory $collection;
+    protected DataPersistorInterface $dataPersistor;
+    protected array $loadedData;
 
     /**
      * Constructor
@@ -51,10 +49,13 @@ class DataProvider extends AbstractDataProvider
         if (isset($this->loadedData)) {
             return $this->loadedData;
         }
+
         $items = $this->collection->getItems();
+
         foreach ($items as $model) {
             $this->loadedData[$model->getId()] = $model->getData();
         }
+
         $data = $this->dataPersistor->get('softloft_smsintegration_smstemplates');
 
         if (!empty($data)) {

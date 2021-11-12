@@ -10,9 +10,6 @@ use Magento\Framework\View\Result\PageFactory;
 
 class Index extends \Magento\Backend\App\Action
 {
-    /**
-     * @var PageFactory
-     */
     private PageFactory $resultPageFactory;
 
     /**
@@ -37,7 +34,7 @@ class Index extends \Magento\Backend\App\Action
     public function execute(): ResultInterface
     {
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend(__("Sms Integration"));
+        $resultPage->getConfig()->getTitle()->prepend(__("Sms Message"));
         return $resultPage;
     }
 }

@@ -11,18 +11,12 @@ interface NotificationInterface extends ExtensibleDataInterface
     const EVENT_TYPE_CODE = 'event_type_code';
     const STORE_ID = 'store_id';
     const STATUS = 'status';
-    const CONTENT = 'content';
     const ENTITY_ID = 'entity_id';
-    const SORT_ORDER = 'sort_order';
-    const BANNER_ID = 'banner_id';
     const COUNT_ATTEMPTS = 'count_attempts';
-    const ICON_POSITION = 'icon_position';
-    const IS_ACTIVE = 'is_active';
-    const HTML = 'html';
     const STATUS_ACTIVE = 1;
 
     /**
-     * Get banner_id
+     * Get entity_id
      * @return int|null
      */
     public function getEntityId(): ?int;
