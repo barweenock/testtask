@@ -10,16 +10,12 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Store\Model\ScopeInterface;
 use SoftLoft\SmsIntegration\Api\SmsClientProviderInterface;
+use SoftLoft\SmsIntegration\Api\SmsMessageProcessorInterface;
 use SoftLoft\SmsIntegration\Model\NotificationRepository;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
-class SmsMessageProcessor
+class SmsMessageProcessor implements SmsMessageProcessorInterface
 {
-    const BATCH_SIZE = 1000;
-    const IS_SENDING_ENABLE = 'SmsIntegration/configurable_cron/enabled_sms';
-    const MAX_MESSAGE_LENGTH = 'SmsIntegration/configurable_cron/max_message_length';
-    const MAX_COUNT_ATTEMPTS = 'SmsIntegration/configurable_cron/max_count_attempts';
-
     private ResourceConnection $resourceConnection;
     private NotificationRepository $notificationRepository;
     private SmsClientProviderInterface $smsClientProvider;

@@ -9,7 +9,6 @@ use SoftLoft\SmsIntegration\Api\Data\SmsTemplatesInterface;
 
 class SmsTemplates extends AbstractExtensibleObject implements SmsTemplatesInterface
 {
-
     /**
      * Get smstemplates_id
      * @return string|null
@@ -32,17 +31,17 @@ class SmsTemplates extends AbstractExtensibleObject implements SmsTemplatesInter
     /**
      * @return mixed|string|null
      */
-    public function getStoreId(): ?string
+    public function getStoreId(): ?int
     {
         return $this->_get(self::STORE_ID);
     }
 
     /**
      * Set store_id
-     * @param string $storeId
+     * @param int $storeId
      * @return SmsTemplatesInterface
      */
-    public function setStoreId(string $storeId): SmsTemplatesInterface
+    public function setStoreId(int $storeId): SmsTemplatesInterface
     {
         return $this->setData(self::STORE_ID, $storeId);
     }

@@ -7,8 +7,7 @@ use Magento\Backend\Block\Widget\Context;
 
 abstract class GenericButton
 {
-
-    protected $context;
+    protected Context $context;
 
     /**
      * @param Context $context
@@ -25,7 +24,7 @@ abstract class GenericButton
      */
     public function getModelId(): ?int
     {
-        return $this->context->getRequest()->getParam('smstemplates_id');
+        return (int) $this->context->getRequest()->getParam('smstemplates_id');
     }
 
     /**

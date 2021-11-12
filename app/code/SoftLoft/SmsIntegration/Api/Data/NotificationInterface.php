@@ -27,10 +27,7 @@ interface NotificationInterface extends ExtensibleDataInterface
      */
     public function getEntityId(): ?int;
 
-    /**
-     * @return string
-     */
-    public function getMessage(): string;
+
 
     /**
      * Get content

@@ -3,20 +3,21 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Cron;
 
-use Psr\Log\LoggerInterface;
+use SoftLoft\SmsIntegration\Api\SmsMessageProcessorInterface;
 
 class SmsIntegration
 {
-    protected LoggerInterface $logger;
+    private SmsMessageProcessorInterface $messageProcessor;
 
     /**
      * Constructor
      *
-     * @param LoggerInterface $logger
+     * @param SmsMessageProcessorInterface $messageProcessor
      */
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
+    public function __construct(
+        SmsMessageProcessorInterface $messageProcessor
+    ) {
+        $this->messageProcessor = $messageProcessor;
     }
 
     /**
@@ -26,6 +27,6 @@ class SmsIntegration
      */
     public function execute()
     {
-        $this->logger->addInfo("Cronjob smsintegration is executed.");
+        $this->messageProcessor->process();
     }
 }

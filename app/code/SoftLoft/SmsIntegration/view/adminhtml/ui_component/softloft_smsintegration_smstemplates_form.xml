@@ -73,17 +73,13 @@
 		<field name="message_template" formElement="input" sortOrder="30">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">SmsTemplates</item>
+					<item name="formElement" xsi:type="string">textarea</item>
+					<item name="cols" xsi:type="number">15</item>
+					<item name="rows" xsi:type="number">5</item>
+					<item name="label" translate="true" xsi:type="string">SmsTemplates</item>
+					<item name="dataType" translate="true" xsi:type="string">text</item>
 				</item>
 			</argument>
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">Message Template</label>
-				<dataScope>message_template</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
 		</field>
 	</fieldset>
 </form>

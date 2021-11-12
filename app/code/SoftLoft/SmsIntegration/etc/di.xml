@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="SoftLoft\SmsIntegration\Api\SmsMessageProcessorInterface" type="SoftLoft\SmsIntegration\Model\MessageProcessor\SmsMessageProcessor"/>
     <preference for="SoftLoft\SmsIntegration\Api\EventLoggerInterface" type="SoftLoft\SmsIntegration\Model\EventLogger"/>
     <type name="Magento\Customer\Model\AccountManagement">
         <plugin name="softloft_smsintegration_customer_registration" type="SoftLoft\SmsIntegration\Plugin\CustomerRegistration" sortOrder='1' disabled="false"/>

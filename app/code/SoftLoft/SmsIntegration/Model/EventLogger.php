@@ -11,7 +11,6 @@ use SoftLoft\SmsIntegration\Api\Data\NotificationInterfaceFactory;
 use SoftLoft\SmsIntegration\Api\NotificationRepositoryInterface;
 use SoftLoft\SmsIntegration\Logger\Logger;
 
-
 class EventLogger implements EventLoggerInterface
 {
     private NotificationInterfaceFactory $notificationInterfaceFactory;
@@ -41,8 +40,12 @@ class EventLogger implements EventLoggerInterface
      * {@inheritDoc}
      * @throws LocalizedException
      */
-    public function saveNotificationData(string $eventTypeCode, string $data, string $customerPhone, string $status)
-    {
+    public function saveNotificationData(
+        string $eventTypeCode,
+        string $data,
+        string $customerPhone,
+        string $status
+    ): void {
         $notification = $this->notificationInterfaceFactory->create();
         $notification->setEventTypeCode($eventTypeCode);
         $notification->setNotificationData($data);
@@ -58,7 +61,7 @@ class EventLogger implements EventLoggerInterface
     /**
      * {@inheritDoc}
      */
-    private function saveNotificationLog(string $eventTypeCode, string $data, string $customerPhone, string $status)
+    public function saveNotificationLog(string $eventTypeCode, string $data, string $customerPhone, string $status): void
     {
         $this->logger->info(
             'Event type code: ' . $eventTypeCode . ', '

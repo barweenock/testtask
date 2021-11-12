@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Model\ResourceModel;
 
-class SmsIntegration extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+
+class SmsIntegration extends AbstractDb
 {
 
     /**

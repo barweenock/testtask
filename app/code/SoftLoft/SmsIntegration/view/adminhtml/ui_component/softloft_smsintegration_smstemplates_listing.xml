@@ -79,7 +79,7 @@
 		<column name="store_id">
 			<settings>
 				<filter>text</filter>
-				<label translate="true">store_id</label>
+				<label translate="true">Store Id</label>
 				<editor>
 					<editorType>text</editorType>
 					<validation>
@@ -95,10 +95,10 @@
 				<resizeDefaultWidth>107</resizeDefaultWidth>
 			</settings>
 		</actionsColumn>
-		<column name="event_type_code">
+		<column name="event_type_code" sortOrder="3">
 			<settings>
 				<filter>text</filter>
-				<label translate="true">event_type_code</label>
+				<label translate="true">Event Type Code</label>
 				<editor>
 					<editorType>text</editorType>
 					<validation>
@@ -107,10 +107,10 @@
 				</editor>
 			</settings>
 		</column>
-		<column name="message_template">
+		<column name="message_template" sortOrder="4">
 			<settings>
 				<filter>text</filter>
-				<label translate="true">message_template</label>
+				<label translate="true">Message Template</label>
 				<editor>
 					<editorType>text</editorType>
 					<validation>

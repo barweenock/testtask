@@ -19,5 +19,18 @@ interface EventLoggerInterface
         string $data,
         string $customerPhone,
         string $status
-    );
+    ): void;
+
+    /**
+     * @param string $eventTypeCode
+     * @param string $data
+     * @param string $customerPhone
+     * @param string $status
+     */
+    public function saveNotificationLog(
+        string $eventTypeCode,
+        string $data,
+        string $customerPhone,
+        string $status
+    ): void;
 }

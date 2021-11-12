@@ -2,7 +2,9 @@
 
 namespace SoftLoft\SmsIntegration\Model\Config;
 
-class CronConfig extends \Magento\Framework\App\Config\Value
+use Magento\Framework\App\Config\Value;
+
+class CronConfig extends Value
 {
     /**
      * Cron string path
@@ -57,7 +59,7 @@ class CronConfig extends \Magento\Framework\App\Config\Value
      * @return $this
      * @throws \Exception
      */
-    public function afterSave()
+    public function afterSave(): CronConfig
     {
         $time = $this->getData('groups/configurable_cron/fields/time/value');
         $frequency = $this->getData('groups/configurable_cron/fields/frequency/value');

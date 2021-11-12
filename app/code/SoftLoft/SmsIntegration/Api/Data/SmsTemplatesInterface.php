@@ -28,16 +28,16 @@ interface SmsTemplatesInterface extends ExtensibleDataInterface
 
     /**
      * Get store_id
-     * @return string|null
+     * @return int|null
      */
-    public function getStoreId(): ?string;
+    public function getStoreId(): ?int;
 
     /**
      * Set store_id
-     * @param string $storeId
+     * @param int $storeId
      * @return SmsTemplatesInterface
      */
-    public function setStoreId(string $storeId): SmsTemplatesInterface;
+    public function setStoreId(int $storeId): SmsTemplatesInterface;
 
     /**
      * Get event_type_code

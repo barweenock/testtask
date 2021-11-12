@@ -40,27 +40,11 @@ class SmsIntegration extends AbstractExtensibleObject implements NotificationInt
     private string $status;
 
     /**
-     * @var string
-     */
-    private $getmessage;
-
-
-    /**
      * @inheritdoc
      */
     public function getEntityId(): ?int
     {
         return $this->entity_id;
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function setEntityId(int $entityId): NotificationInterface
-    {
-        $this->entityId = $entityId;
-        return $this;
     }
 
     /**
@@ -141,16 +125,5 @@ class SmsIntegration extends AbstractExtensibleObject implements NotificationInt
     public function getStatus(): ?string
     {
         return $this->status;
-    }
-
-    public function getMessage(): string
-    {
-        return $this->getmessage;
-    }
-
-    public function setMessage(string $message): string
-    {
-        $this->getmessage = $message;
-        return $this->getmessage;
     }
 }
