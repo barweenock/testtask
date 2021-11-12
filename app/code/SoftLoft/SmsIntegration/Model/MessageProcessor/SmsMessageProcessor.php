@@ -93,7 +93,9 @@ class SmsMessageProcessor implements SmsMessageProcessorInterface
                     $countAttempts = ++$countAttempts;
                     $notification->setStatus('complete');
                     $notification->setCountAttempts((int)$countAttempts);
-                    $this->notificationRepository->save($notification);
+                    $this->notificationRepository->save(
+                        $notification->setEntityId((int)$row['entity_id'])
+                    );
                 }
 
                 $select->limitPage($page++, self::BATCH_SIZE);

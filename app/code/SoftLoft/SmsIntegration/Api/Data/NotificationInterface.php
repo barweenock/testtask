@@ -28,6 +28,13 @@ interface NotificationInterface extends ExtensibleDataInterface
     public function getEntityId(): ?int;
 
     /**
+     * Get banner_id
+     * @param int $entity_id
+     * @return NotificationInterface
+     */
+    public function setEntityId(int $entity_id): NotificationInterface;
+
+    /**
      * Get content
      * @return string|null
      */

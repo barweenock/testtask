@@ -34,6 +34,15 @@ class SmsIntegration extends AbstractExtensibleObject implements NotificationInt
     /**
      * @inheritdoc
      */
+    public function setEntityId(int $entity_id): NotificationInterface
+    {
+        $this->entity_id = $entity_id;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getEventTypeCode(): ?string
     {
         return $this->eventTypeCode;
