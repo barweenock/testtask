@@ -12,7 +12,7 @@ class SmsTemplatesActions extends Column
 {
 
     const URL_PATH_EDIT = 'softloft_smsintegration/smstemplates/edit';
-    protected $urlBuilder;
+    protected UrlInterface $urlBuilder;
     const URL_PATH_DETAILS = 'softloft_smsintegration/smstemplates/details';
     const URL_PATH_DELETE = 'softloft_smsintegration/smstemplates/delete';
 

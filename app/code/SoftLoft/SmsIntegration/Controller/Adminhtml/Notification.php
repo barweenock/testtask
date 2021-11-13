@@ -9,7 +9,6 @@ use Magento\Backend\Model\View\Result\Page;
 
 abstract class Notification extends \Magento\Backend\App\Action
 {
-
     const ADMIN_RESOURCE = 'SoftLoft_SmsIntegration::top_level';
 
     /**

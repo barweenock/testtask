@@ -10,8 +10,7 @@ use Magento\Framework\Registry;
 
 abstract class SmsTemplates extends Action
 {
-
-    protected $_coreRegistry;
+    protected Registry $_coreRegistry;
     const ADMIN_RESOURCE = 'SoftLoft_SmsIntegration::top_level';
 
     /**

@@ -3,18 +3,24 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Controller\Adminhtml\SmsTemplates;
 
-class InlineEdit extends \Magento\Backend\App\Action
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\Controller\ResultInterface;
+use SoftLoft\SmsIntegration\Model\SmsTemplates;
+
+class InlineEdit extends Action
 {
 
-    protected $jsonFactory;
+    protected JsonFactory $jsonFactory;
 
     /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
+     * @param Context $context
+     * @param JsonFactory $jsonFactory
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
+        Context $context,
+        JsonFactory $jsonFactory
     ) {
         parent::__construct($context);
         $this->jsonFactory = $jsonFactory;
@@ -23,11 +29,10 @@ class InlineEdit extends \Magento\Backend\App\Action
     /**
      * Inline edit action
      *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return ResultInterface
      */
-    public function execute()
+    public function execute(): ResultInterface
     {
-        /** @var \Magento\Framework\Controller\Result\Json $resultJson */
         $resultJson = $this->jsonFactory->create();
         $error = false;
         $messages = [];
@@ -38,14 +43,14 @@ class InlineEdit extends \Magento\Backend\App\Action
                 $messages[] = __('Please correct the data sent.');
                 $error = true;
             } else {
-                foreach (array_keys($postItems) as $modelid) {
-                    /** @var \SoftLoft\SmsIntegration\Model\SmsTemplates $model */
-                    $model = $this->_objectManager->create(\SoftLoft\SmsIntegration\Model\SmsTemplates::class)->load($modelid);
+                foreach (array_keys($postItems) as $model_Id) {
+                    /** @var SmsTemplates $model */
+                    $model = $this->_objectManager->create(SmsTemplates::class)->load($model_Id);
                     try {
-                        $model->setData(array_merge($model->getData(), $postItems[$modelid]));
+                        $model->setData(array_merge($model->getData(), $postItems[$model_Id]));
                         $model->save();
                     } catch (\Exception $e) {
-                        $messages[] = "[Smstemplates ID: {$modelid}]  {$e->getMessage()}";
+                        $messages[] = "[Smstemplates ID: {$model_Id}]  {$e->getMessage()}";
                         $error = true;
                     }
                 }

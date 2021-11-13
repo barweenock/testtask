@@ -5,7 +5,6 @@ namespace SoftLoft\SmsIntegration\Controller\Adminhtml\SmsTemplates;
 
 class NewAction extends \SoftLoft\SmsIntegration\Controller\Adminhtml\SmsTemplates
 {
-
     protected $resultForwardFactory;
 
     /**

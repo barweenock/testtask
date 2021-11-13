@@ -108,12 +108,12 @@ class SmsTemplatesRepository implements SmsTemplatesRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function get($smsTemplatesId)
+    public function get(string $smstemplatesId)
     {
         $smsTemplates = $this->smsTemplatesFactory->create();
-        $this->resource->load($smsTemplates, $smsTemplatesId);
+        $this->resource->load($smsTemplates, $smstemplatesId);
         if (!$smsTemplates->getId()) {
-            throw new NoSuchEntityException(__('SmsTemplates with id "%1" does not exist.', $smsTemplatesId));
+            throw new NoSuchEntityException(__('SmsTemplates with id "%1" does not exist.', $smstemplatesId));
         }
         return $smsTemplates->getDataModel();
     }
@@ -168,9 +168,9 @@ class SmsTemplatesRepository implements SmsTemplatesRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function deleteById($smsTemplatesId)
+    public function deleteById(string $smstemplatesId)
     {
-        return $this->delete($this->get($smsTemplatesId));
+        return $this->delete($this->get($smstemplatesId));
     }
 }
 

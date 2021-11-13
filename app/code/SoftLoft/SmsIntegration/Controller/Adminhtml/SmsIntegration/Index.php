@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Controller\Adminhtml\SmsIntegration;
 
+use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\View\Result\PageFactory;
 
-class Index extends \Magento\Backend\App\Action
+class Index extends Action
 {
     private PageFactory $resultPageFactory;
 

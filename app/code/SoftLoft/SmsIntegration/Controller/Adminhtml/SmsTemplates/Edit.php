@@ -3,20 +3,25 @@ declare(strict_types=1);
 
 namespace SoftLoft\SmsIntegration\Controller\Adminhtml\SmsTemplates;
 
-class Edit extends \SoftLoft\SmsIntegration\Controller\Adminhtml\SmsTemplates
-{
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Result\PageFactory;
+use SoftLoft\SmsIntegration\Controller\Adminhtml\SmsTemplates;
 
-    protected $resultPageFactory;
+class Edit extends SmsTemplates
+{
+    protected PageFactory $resultPageFactory;
 
     /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Registry $coreRegistry
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param Context $context
+     * @param Registry $coreRegistry
+     * @param PageFactory $resultPageFactory
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Registry $coreRegistry,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        Context $context,
+        Registry $coreRegistry,
+        PageFactory $resultPageFactory
     ) {
         $this->resultPageFactory = $resultPageFactory;
         parent::__construct($context, $coreRegistry);
@@ -25,15 +30,13 @@ class Edit extends \SoftLoft\SmsIntegration\Controller\Adminhtml\SmsTemplates
     /**
      * Edit action
      *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return ResultInterface
      */
     public function execute()
     {
-        // 1. Get ID and create model
         $id = $this->getRequest()->getParam('smstemplates_id');
         $model = $this->_objectManager->create(\SoftLoft\SmsIntegration\Model\SmsTemplates::class);
-        
-        // 2. Initial checking
+
         if ($id) {
             $model->load($id);
             if (!$model->getId()) {
@@ -43,9 +46,9 @@ class Edit extends \SoftLoft\SmsIntegration\Controller\Adminhtml\SmsTemplates
                 return $resultRedirect->setPath('*/*/');
             }
         }
+
         $this->_coreRegistry->register('softloft_smsintegration_smstemplates', $model);
-        
-        // 3. Build edit form
+
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
         $this->initPage($resultPage)->addBreadcrumb(

@@ -2,16 +2,20 @@
 
 namespace SoftLoft\SmsIntegration\Test\Unit;
 
-class TestSmsMessageProcessor extends \PHPUnit\Framework\TestCase
+use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use PHPUnit\Framework\TestCase;
+use SoftLoft\SmsIntegration\Model\MessageProcessor\SmsMessageProcessor;
+
+class TestSmsMessageProcessor extends TestCase
 {
     /**
-     * @var \SoftLoft\SmsIntegration\Model\MessageProcessor\SmsMessageProcessor
+     * @var SmsMessageProcessor
      */
     protected $sampleClass;
 
     public function setUp():void
     {
-        $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+        $objectManager = new ObjectManager($this);
         $this->sampleClass = $objectManager->getObject('SoftLoft\SmsIntegration\Model\MessageProcessor\SmsMessageProcessor');
     }
 
